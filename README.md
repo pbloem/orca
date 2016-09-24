@@ -10,8 +10,11 @@ This is a pretty straight port of the C++ code published here:
 
 ## Use
 
-Use [Jitpack](jitpack.io) to include in any maven projects.
+Use [Jitpack](jitpack.io) to include in any maven projects.  
 
+Have a look at the unit tests to see how the library is called. It's not super-user
+friendly at the moment. If you'd like to use this, drop me a note or make an issue,
+and I'll see if I can tidy it up a bit. 
 
 ## License
 
