@@ -262,13 +262,27 @@ public class OrcaTest
 	}
 	
 	@Test
+	public void printOrbits()
+	{
+		UGraph<String> graph = Graphs.ladder(3, "");
+		
+		System.out.println(graph);
+		
+		Orca orca = new Orca(graph, true);
+
+		for(int orbit : series(orca.numOrbits()))
+			for(int node : series(graph.size()))
+				System.out.println("o" + orbit + ", n"+ node + ": " + orca.orbit(node, orbit));
+	}
+	
+	@Test
 	public void testCompare()
 	{
-		for(int n : series(3, 4))
+		for(int n : series(2, 20))
 		{
     		UGraph<String> graph = Graphs.ladder(n, "");
     		
-    		System.out.println(graph);
+    		//System.out.println(graph);
     		
     		Orca orca = new Orca(graph, true);
     		System.out.println("Orca finished");
@@ -284,9 +298,9 @@ public class OrcaTest
     		{
     			sub = c(sub);
     			
-    			System.out.println((int)fanmod.frequency(sub) + " " + orca.count(sub, true) + " " + sub);
+    			// System.out.println((int)fanmod.frequency(sub) + " " + orca.count(sub, true) + " " + sub);
 
-    			//assertEquals((int)fanmod.frequency(sub), orca.count(sub, true));
+    			assertEquals((int)fanmod.frequency(sub), orca.count(sub, true));
     		}  
 
 		}
@@ -301,16 +315,16 @@ public class OrcaTest
 		UGraph<String> graph = RandomGraphs.randomFast(20, 190);
 				
 		tic();
-		Orca orca = new Orca(graph, false);
+		Orca orca = new Orca(graph, true);
 		System.out.println("Orca finished, " + toc() + " seconds.");
 		
 		tic();
 		FrequencyModel<Graph<String>> fanmod = new FrequencyModel<Graph<String>>();		
-		for(Set<Integer> ind : new AllSubgraphs(graph, 4))
+		for(Set<Integer> ind : new AllSubgraphs(graph, 5))
 			fanmod.add(c(Subgraph.uSubgraphIndices(graph, ind)));
 		System.out.println("Fanmod finished, " + toc() + " seconds.");
 		
-		for(UGraph<String> sub : Graphs.allIsoConnected(4, "x"))
+		for(UGraph<String> sub : Graphs.allIsoConnected(5, "x"))
 		{
 			sub = c(sub);
 			assertEquals((int)fanmod.frequency(sub), orca.count(sub, true));
@@ -328,10 +342,9 @@ public class OrcaTest
 		
 		for(int i : series(n))
 		{
-    		// * this should finish in under 0.1 seconds
+    		// * Ideally, this should finish in under 0.1 seconds with four nodes
+			//   and under 6.6 with 5 nodes.
     		graph = randomFast(5097, 22282);
-    		// graph = randomFast(50, 100);
-
     		    		
     		tic();
     		orca = new Orca(graph, true);

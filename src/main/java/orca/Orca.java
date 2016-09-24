@@ -108,17 +108,17 @@ public class Orca
 			copy = Graphs.reorder(copy, Nauty.order(copy, N));
 				
 		int graphIndex = Orca.graph2Index.get(copy);
-		System.out.println("graph index: " + graphIndex);
-		System.out.println("     orbits: " + graph2Orbits.get(graphIndex));
+	//	System.out.println("graph index: " + graphIndex);
+	//	System.out.println("     orbits: " + graph2Orbits.get(graphIndex));
 
 		
 		int sum = 0;
 		for(int orbit : graph2Orbits.get(graphIndex))
 		{
-			System.out.print((int)orbitSums.frequency(orbit) + " ");
+			//System.out.print((int)orbitSums.frequency(orbit) + " ");
 			sum += orbitSums.frequency(orbit);
 		}
-		System.out.println();
+		//System.out.println();
 		
 		return sum / graph.size();
 	}
@@ -250,14 +250,13 @@ public class Orca
 		for (int i : series(graph.size())) 
 			c5[i] = complete(i, 5, graph);
 
-		int[] xCommon = new int[graph.size()];
-		int[] aCommon = new int[graph.size()];
-
 		// set up a system of equations relating orbit counts
 		Global.log().info("stage 3 - building systems of equations\n");
 		
 		for (int x = 0; x < graph.size(); x++) 
 		{
+			int[] xCommon = new int[graph.size()];
+			
 			// smaller graphlets
 			orbit[x][0] = degree[x];
 			
@@ -303,7 +302,8 @@ public class Orca
 			for (int aIndex = 0; aIndex < degree[x]; aIndex ++) 
 			{
 				int a = neighbors[x][aIndex];
-
+				
+				int[] aCommon = new int[graph.size()];
 
 				for (int bIndex = 0; bIndex< degree[a]; bIndex++) 
 				{
@@ -660,11 +660,9 @@ public class Orca
 	{		
 		orbit = new long[graph.size()][15];
 		
-		Global.log().info("stage 1 - precomputing common nodes");
-			
-
+		// Global.log().info("stage 1 - precomputing common nodes");
 		
-		Global.log().info("stage 2 - counting complete, size 4 graphlets");
+		// Global.log().info("stage 2 - counting complete, size 4 graphlets");
 		
 		// * Stores how often the node at a given index is involved in a 
 		//   complete graphlet of 4 nodes
@@ -672,7 +670,7 @@ public class Orca
 		for (int i : series(graph.size())) 
 			c4[i] = complete(i, 4, graph);
 			
-		Global.log().info("stage 3 - building systems of equations\n");	
+		// Global.log().info("stage 3 - building systems of equations\n");	
 		
 		for(int x = 0; x < graph.size(); x++)
 		{			
@@ -688,7 +686,6 @@ public class Orca
     		     f_8_12 = 0,
     		     f_14 = c4[x];
     		
-    		// FrequencyModel<Integer> common = new FrequencyModel<Integer>();
     		int[] common = new int[graph.size()];
     		    		
     		// * Size 2 graphlets
