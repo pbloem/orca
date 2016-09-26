@@ -344,7 +344,7 @@ public class OrcaTest
 		{
     		// * Ideally, this should finish in under 0.1 seconds with four nodes
 			//   and under 6.6 with 5 nodes.
-    		graph = randomFast(5097, 22282);
+    		graph = randomFast(1276, 2059);
     		    		
     		tic();
     		orca = new Orca(graph, true);

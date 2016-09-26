@@ -93,6 +93,8 @@ public class Orca
 	 * How often does the given subgraph occur?
 	 * 
 	 * @param graph
+	 * @param canonical Is the given graph in canonical ordering? If not it is 
+	 * 	transform first.
 	 * @return
 	 */
 	public int count(UGraph<?> graph, boolean canonical)
@@ -207,7 +209,7 @@ public class Orca
 		orbit = new long[graph.size()][73];
 
 		// precompute common nodes
-		Global.log().info("stage 1 - precomputing common nodes\n");
+		// Global.log().info("stage 1 - precomputing common nodes\n");
 		
 		FrequencyModel<Pair> common2 = new FrequencyModel<Pair>();
 		FrequencyModel<Triple> common3 = new FrequencyModel<Triple>();
@@ -242,7 +244,7 @@ public class Orca
 			}
 		}
 
-		Global.log().info("stage 2 - counting full graphlets\n");
+		// Global.log().info("stage 2 - counting full graphlets\n");
 	
 		// * Stores how often the node at a given index is involved in a 
 		//   complete graphlet of 5 nodes
@@ -251,10 +253,12 @@ public class Orca
 			c5[i] = complete(i, 5, graph);
 
 		// set up a system of equations relating orbit counts
-		Global.log().info("stage 3 - building systems of equations\n");
+		// Global.log().info("stage 3 - building systems of equations\n");
 		
 		for (int x = 0; x < graph.size(); x++) 
 		{
+			// Functions.dot(x, graph.size());
+			
 			int[] xCommon = new int[graph.size()];
 			
 			// smaller graphlets
